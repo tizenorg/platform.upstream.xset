@@ -88,7 +88,9 @@ in this Software without prior written authorization from The Open Group.
 static Status set_font_cache(Display *, long, long, long);
 static void query_cache_status(Display *dpy);
 #endif
+#ifdef XPRINT
 #include <X11/extensions/Print.h>
+#endif
 
 #define ON 1
 #define OFF 0
@@ -354,6 +356,7 @@ for (i = 1; i < argc; ) {
       }
   }
 #endif
+#ifdef XPRINT
   else if (strcmp(arg, "rehashprinterlist") == 0) { /* rehash list of printers */
       short dummy;
       if (XpQueryVersion(dpy, &dummy, &dummy)) {
@@ -362,6 +365,7 @@ for (i = 1; i < argc; ) {
           fprintf(stderr, "server does not have extension for rehashprinterlist option\n");
       }
   }
+#endif
   else if (strcmp(arg, "fp") == 0) {	       /* set font path */
     if (i >= argc) {
 	arg = "default";
@@ -1509,8 +1513,10 @@ usage(char *fmt, ...)
     fprintf (stderr, "    Show font cache statistics:\n");
     fprintf (stderr, "\t fc s\n");
 #endif
+#ifdef XPRINT
     fprintf (stderr, "    To control Xprint features:\n");
     fprintf (stderr, "\t rehashprinterlist      Recomputes the list of available printers\n");
+#endif
     fprintf (stderr, "    To set the font path:\n" );
     fprintf (stderr, "\t fp= path[,path...]\n" );
     fprintf (stderr, "    To restore the default font path:\n");
