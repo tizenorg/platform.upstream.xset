@@ -88,7 +88,7 @@ in this Software without prior written authorization from The Open Group.
 static Status set_font_cache(Display *, long, long, long);
 static void query_cache_status(Display *dpy);
 #endif
-#ifdef XPRINT
+#ifdef INCLUDE_XPRINT_SUPPORT
 #include <X11/extensions/Print.h>
 #endif
 
@@ -356,7 +356,7 @@ for (i = 1; i < argc; ) {
       }
   }
 #endif
-#ifdef XPRINT
+#ifdef INCLUDE_XPRINT_SUPPORT
   else if (strcmp(arg, "rehashprinterlist") == 0) { /* rehash list of printers */
       short dummy;
       if (XpQueryVersion(dpy, &dummy, &dummy)) {
@@ -1513,7 +1513,7 @@ usage(char *fmt, ...)
     fprintf (stderr, "    Show font cache statistics:\n");
     fprintf (stderr, "\t fc s\n");
 #endif
-#ifdef XPRINT
+#ifdef INCLUDE_XPRINT_SUPPORT
     fprintf (stderr, "    To control Xprint features:\n");
     fprintf (stderr, "\t rehashprinterlist      Recomputes the list of available printers\n");
 #endif
