@@ -27,6 +27,6 @@ xset_LDADD = $(XSET_LIBS)
 xset_SOURCES =	\
         xset.c
 
-dist_man_MANS = \
+dist_man1_MANS = \
         xset.man
 
