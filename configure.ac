@@ -1,4 +1,3 @@
-
 dnl  Copyright 2005 Red Hat, Inc.
 dnl 
 dnl  Permission to use, copy, modify, distribute, and sell this software and its
@@ -33,6 +32,42 @@ AC_PROG_INSTALL
 
 # Checks for pkg-config packages
 PKG_CHECK_MODULES(XSET, xmu)
+
+PKG_CHECK_MODULES(SET_XEXT, xextproto xext,
+	[SAVE_CPPFLAGS="$CPPFLAGS"
+	CPPFLAGS="$CPPFLAGS $SET_XEXT_CFLAGS"
+	AC_CHECK_HEADERS([X11/extensions/dpms.h X11/extensions/MITMisc.h],,,[#include <X11/Xlib.h>])
+	CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
+
+PKG_CHECK_MODULES(SET_XKB, kbproto x11, 
+	[SAVE_CPPFLAGS="$CPPFLAGS"
+	CPPFLAGS="$CPPFLAGS $SET_XKB_CFLAGS"
+	AC_CHECK_HEADERS([X11/XKBlib.h],,,[#include <X11/Xlib.h>])
+	CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
+
+PKG_CHECK_MODULES(SET_XF86MISC, xf86miscproto xxf86misc, 
+	[SAVE_CPPFLAGS="$CPPFLAGS"
+	CPPFLAGS="$CPPFLAGS $SET_XF86MISC_CFLAGS"
+	AC_CHECK_HEADERS([X11/extensions/xf86misc.h X11/extensions/xf86mscstr.h],,,
+			  [#include <X11/Xlib.h>
+#include <X11/Xproto.h>])
+	CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
+
+PKG_CHECK_MODULES(SET_FONTCACHE, fontcacheproto fontcache,
+	[SAVE_CPPFLAGS="$CPPFLAGS"
+	CPPFLAGS="$CPPFLAGS $SET_FONTCACHE_CFLAGS"
+	AC_CHECK_HEADERS([X11/extensions/fontcache.h X11/extensions/fontcacheP.h],,,[#include <X11/Xlib.h>])
+	CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
+
+PKG_CHECK_MODULES(SET_XPRINT, printproto xp, 
+	[SAVE_CPPFLAGS="$CPPFLAGS"
+	CPPFLAGS="$CPPFLAGS $SET_XPRINT_CFLAGS"
+	AC_CHECK_HEADERS([X11/extensions/Print.h],,,[#include <X11/Xlib.h>])
+	CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
+
+XSET_CFLAGS="$XSET_CFLAGS $SET_XEXT_CFLAGS $SET_XKB_CFLAGS $SET_XF86MISC_CFLAGS $SET_FONTCACHE_CFLAGS $SET_XPRINT_CFLAGS"
+XSET_LIBS="$XSET_LIBS $SET_XSET_LIBS $SET_XKB_LIBS $SET_XF86MISC_LIBS $SET_FONTCACHE_LIBS $SET_XPRINT_LIBS"
+
 AC_SUBST(XSET_CFLAGS)
 AC_SUBST(XSET_LIBS)
 
