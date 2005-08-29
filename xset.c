@@ -30,6 +30,34 @@ in this Software without prior written authorization from The Open Group.
 /* $XFree86: xc/programs/xset/xset.c,v 3.31 2003/05/27 22:27:09 tsi Exp $ */
 /* Modified by Stephen so keyboard rate is set using XKB extensions */
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#ifdef HAVE_X11_EXTENSIONS_DPMS_H
+#define DPMSExtension
+#endif
+
+#ifdef HAVE_X11_EXTENSIONS_MITMISC_H
+#define MITMISC
+#endif
+
+#ifdef HAVE_X11_XKBLIB_H
+#define XKB
+#endif
+
+#if defined(HAVE_X11_EXTENSIONS_XF86MISC_H) && defined(HAVE_X11_EXTENSIONS_XF86MSCSTR_H)
+#define XF86MISC
+#endif
+
+#if defined(HAVE_X11_EXTENSIONS_PRINT_H)
+#define BUILD_XPRINT_SUPPORT
+#endif
+
+#if defined(HAVE_X11_EXTENSIONS_FONTCACHE_H) && defined(HAVE_X11_EXTENSIONS_FONTCACHEP_H)
+#define FONTCACHE
+#endif
+
 #include <stdio.h>
 #include <ctype.h>
 #include <stdarg.h>
