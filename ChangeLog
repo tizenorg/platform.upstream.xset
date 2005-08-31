@@ -1,4 +1,6 @@
 2005-08-29  Daniel Stone  <daniel@freedesktop.org>
 
+	Bump to 0.99.1.
+
 	* configure.ac:
 	Add support for more extensions.
