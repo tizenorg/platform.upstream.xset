@@ -53,7 +53,7 @@ PKG_CHECK_MODULES(SET_XF86MISC, xf86miscproto xxf86misc,
 #include <X11/Xproto.h>])
 	CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
 
-PKG_CHECK_MODULES(SET_FONTCACHE, fontcacheproto fontcache,
+PKG_CHECK_MODULES(SET_FONTCACHE, fontcacheproto xfontcache,
 	[SAVE_CPPFLAGS="$CPPFLAGS"
 	CPPFLAGS="$CPPFLAGS $SET_FONTCACHE_CFLAGS"
 	AC_CHECK_HEADERS([X11/extensions/fontcache.h X11/extensions/fontcacheP.h],,,[#include <X11/Xlib.h>])

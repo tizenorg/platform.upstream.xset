@@ -1,3 +1,8 @@
+2005-10-20  Eric Anholt  <anholt@FreeBSD.org>
+
+	* configure.ac:
+	Fix check for fontcache to look for "xfontcache" (Bill Crawford)
+
 2005-10-18  Kevin E. Martin  <kem-at-freedesktop-dot-org>
 
 	* configure.ac:
