@@ -51,7 +51,7 @@ in this Software without prior written authorization from The Open Group.
 #endif
 
 #if defined(HAVE_X11_EXTENSIONS_PRINT_H)
-#define BUILD_XPRINT_SUPPORT
+#define BUILD_PRINTSUPPORT
 #endif
 
 #if defined(HAVE_X11_EXTENSIONS_FONTCACHE_H) && defined(HAVE_X11_EXTENSIONS_FONTCACHEP_H)
