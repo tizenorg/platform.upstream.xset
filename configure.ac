@@ -31,7 +31,7 @@ AC_PROG_CC
 AC_PROG_INSTALL
 
 # Checks for pkg-config packages
-PKG_CHECK_MODULES(XSET, xmu)
+PKG_CHECK_MODULES(XSET, xmuu)
 
 # This is used below to allow <X11/Xlib.h> to be found
 PKG_CHECK_MODULES(SET_X11, x11)
