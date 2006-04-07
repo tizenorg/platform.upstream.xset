@@ -1,3 +1,11 @@
+2006-04-06  Alan Coopersmith  <alan.coopersmith@sun.com>
+
+	* xset.c (set_lock): 
+	Free modifier map when done with it (Coverity #823 & 824)
+
+	* xset.c (xkbset_repeatrate): 
+	Free Xkb keyboard description when done with it (Coverity #825)
+
 2005-12-20  Kevin E. Martin  <kem-at-freedesktop-dot-org>
 
 	* configure.ac:
