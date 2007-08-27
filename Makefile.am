@@ -21,7 +21,7 @@
 
 bin_PROGRAMS = xset
 
-xset_CFLAGS = $(XSET_CFLAGS) -D_BSD_SOURCE
+AM_CFLAGS = $(XSET_CFLAGS) -D_BSD_SOURCE
 xset_LDADD = $(XSET_LIBS)
 
 xset_SOURCES =	\
