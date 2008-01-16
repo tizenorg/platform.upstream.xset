@@ -1256,11 +1256,7 @@ set_lock(Display *dpy, Bool onoff)
 
 #ifdef FONTCACHE
 static Status
-set_font_cache(dpy, himark, lowmark, balance)
-    Display *dpy;
-    long himark;
-    long lowmark;
-    long balance;
+set_font_cache(Display *dpy, long himark, long lowmark, long balance)
 {
     FontCacheSettings cs;
     Status status;
@@ -1484,8 +1480,7 @@ query(Display *dpy)
  *  current settings and statistics are.
  */
 static void
-query_cache_status(dpy)
-    Display *dpy;
+query_cache_status(Display *dpy)
 {
     int dummy;
     FontCacheSettings cs;
