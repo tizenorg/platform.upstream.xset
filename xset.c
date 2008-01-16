@@ -94,16 +94,6 @@ in this Software without prior written authorization from The Open Group.
 # endif
 #endif /* DPMSExtension */
 
-#include <X11/Xos.h>
-#include <X11/Xfuncs.h>
-#include <X11/Xlib.h>
-#include <X11/keysym.h>
-#include <X11/Xproto.h>
-#include <X11/Xutil.h>
-#include <X11/Xmu/Error.h>
-#ifdef MITMISC
-# include <X11/extensions/MITMisc.h>
-#endif
 #ifdef XF86MISC
 # include <X11/extensions/xf86misc.h>
 # include <X11/extensions/xf86mscstr.h>
