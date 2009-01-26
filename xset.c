@@ -141,9 +141,9 @@ static void query_cache_status(Display *dpy);
 	if (i >= argc) \
 		break; \
 
-char *progName;
+static char *progName;
 
-int error_status = 0;
+static int error_status = 0;
 
 static int is_number(char *arg, int maximum);
 static void set_click(Display *dpy, int percent);
