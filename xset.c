@@ -195,18 +195,13 @@ main(int argc, char *argv[])
     Display *dpy;
     Bool hasargs = False;
 
-#ifdef XF86MISC
-    int miscpresent = 1;
-    int major, minor;
-#else
     int miscpresent = 0;
-#endif
+    int xkbpresent = 0;
+
 #ifdef XKB
-    int xkbpresent = 1;
     int xkbmajor = XkbMajorVersion, xkbminor = XkbMinorVersion;
     int xkbopcode, xkbevent, xkberror;
 #else
-    int xkbpresent = 0;
 #endif
 #ifdef FONTCACHE
     long himark, lowmark, balance;
@@ -731,22 +726,28 @@ main(int argc, char *argv[])
 
 #ifdef XF86MISC
 		    int rate_set = 0;
-
-		    if (XF86MiscQueryVersion(dpy, &major, &minor)) {
-			delay = KBDDELAY_DEFAULT, rate = KBDRATE_DEFAULT;
-		    } else {
-			miscpresent = 0;
-		    }
 #endif
+
 #ifdef XKB
 		    if (XkbQueryExtension(dpy, &xkbopcode, &xkbevent,
 					  &xkberror, &xkbmajor, &xkbminor)) {
-			delay = XKBDDELAY_DEFAULT, rate = XKBDRATE_DEFAULT;
-		    } else {
-			xkbpresent = 0;
+			delay = XKBDDELAY_DEFAULT;
+			rate = XKBDRATE_DEFAULT;
+			xkbpresent = 1;
 		    }
 #endif
-		    if (!miscpresent && !xkbpresent)
+#ifdef XF86MISC
+		    if (!xkbpresent) {
+			int dummy;
+
+			if (XF86MiscQueryExtension(dpy, &dummy, &dummy)) {
+			    delay = KBDDELAY_DEFAULT;
+			    rate = KBDRATE_DEFAULT;
+			    miscpresent = 1;
+			}
+		    }
+#endif
+		    if (!xkbpresent && !miscpresent)
 			fprintf(stderr,
 				"server does not have extension for \"r rate\" option\n");
 		    i++;
