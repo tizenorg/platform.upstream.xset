@@ -56,25 +56,43 @@ PKG_CHECK_MODULES(SET_XKB, x11,
 	AC_CHECK_HEADERS([X11/XKBlib.h],,,[#include <X11/Xlib.h>])
 	CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
 
-PKG_CHECK_MODULES(SET_XF86MISC, xxf86misc, 
-	[SAVE_CPPFLAGS="$CPPFLAGS"
-	CPPFLAGS="$CPPFLAGS $SET_XF86MISC_CFLAGS $SET_X11_CFLAGS"
-	AC_CHECK_HEADERS([X11/extensions/xf86misc.h X11/extensions/xf86mscstr.h],,,
-			  [#include <X11/Xlib.h>
+AC_ARG_WITH(xf86misc, AC_HELP_STRING([--without-xf86misc],[Disable xf86misc support.]), 
+                [USE_XF86MISC="$withval"], [USE_XF86MISC="yes"])
+if test "x$USE_XF86MISC" != "xno" ; then
+	PKG_CHECK_MODULES(SET_XF86MISC, xxf86misc, 
+		[SAVE_CPPFLAGS="$CPPFLAGS"
+		CPPFLAGS="$CPPFLAGS $SET_XF86MISC_CFLAGS $SET_X11_CFLAGS"
+		AC_CHECK_HEADERS([X11/extensions/xf86misc.h X11/extensions/xf86mscstr.h],,,
+				  [#include <X11/Xlib.h>
 #include <X11/Xproto.h>])
-	CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
+		CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
+else
+        echo "without xf86misc"
+fi
 
-PKG_CHECK_MODULES(SET_FONTCACHE, xfontcache,
-	[SAVE_CPPFLAGS="$CPPFLAGS"
-	CPPFLAGS="$CPPFLAGS $SET_FONTCACHE_CFLAGS $SET_X11_CFLAGS"
-	AC_CHECK_HEADERS([X11/extensions/fontcache.h X11/extensions/fontcacheP.h],,,[#include <X11/Xlib.h>])
-	CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
+AC_ARG_WITH(fontcache, AC_HELP_STRING([--without-fontcache],[Disable fontcache support.]),
+                [USE_XFONTCACHE="$withval"], [USE_XFONTCACHE="yes"])
+if test "x$USE_XFONTCACHE" != "xno" ; then
+	PKG_CHECK_MODULES(SET_FONTCACHE, xfontcache,
+		[SAVE_CPPFLAGS="$CPPFLAGS"
+		CPPFLAGS="$CPPFLAGS $SET_FONTCACHE_CFLAGS $SET_X11_CFLAGS"
+		AC_CHECK_HEADERS([X11/extensions/fontcache.h X11/extensions/fontcacheP.h],,,[#include <X11/Xlib.h>])
+		CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
+else
+	echo "without fontcache"
+fi
 
-PKG_CHECK_MODULES(SET_XPRINT, xp, 
-	[SAVE_CPPFLAGS="$CPPFLAGS"
-	CPPFLAGS="$CPPFLAGS $SET_XPRINT_CFLAGS $SET_X11_CFLAGS"
-	AC_CHECK_HEADERS([X11/extensions/Print.h],,,[#include <X11/Xlib.h>])
-	CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
+AC_ARG_WITH(xprint, AC_HELP_STRING([--without-xprint],[Disable xprint support.]),
+                [USE_XPRINT="$withval"], [USE_XPRINT="yes"])
+if test "x$USE_XPRINT" != "xno" ; then
+	PKG_CHECK_MODULES(SET_XPRINT, xp, 
+		[SAVE_CPPFLAGS="$CPPFLAGS"
+		CPPFLAGS="$CPPFLAGS $SET_XPRINT_CFLAGS $SET_X11_CFLAGS"
+		AC_CHECK_HEADERS([X11/extensions/Print.h],,,[#include <X11/Xlib.h>])
+		CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
+else
+	echo "without xprint"
+fi
 
 XSET_CFLAGS="$CWARNFLAGS $XSET_CFLAGS $SET_XEXT_CFLAGS $SET_XKB_CFLAGS $SET_XF86MISC_CFLAGS $SET_FONTCACHE_CFLAGS $SET_XPRINT_CFLAGS"
 XSET_LIBS="$XSET_LIBS $SET_XEXT_LIBS $SET_XKB_LIBS $SET_XF86MISC_LIBS $SET_FONTCACHE_LIBS $SET_XPRINT_LIBS"
