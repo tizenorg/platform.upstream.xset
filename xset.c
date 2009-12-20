@@ -1384,9 +1384,6 @@ query(Display *dpy)
 
 	    if (XGetAtomNames(dpy, iatoms, j, iatomnames)) {
 		for (i = 0; i < j; i++) {
-		    Bool state;
-		    int ind;
-
 		    if (XkbGetNamedIndicator(dpy, iatoms[i], &inds[i],
 					     &istates[i], NULL, NULL)) {
 			int namelen = strlen(iatomnames[i]);
