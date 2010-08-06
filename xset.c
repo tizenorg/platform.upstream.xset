@@ -1314,7 +1314,6 @@ query(Display *dpy)
     XKeyboardState values;
     int acc_num, acc_denom, threshold;
     int timeout, interval, prefer_blank, allow_exp;
-    int dummy;
 
 #ifdef XF86MISC
     XF86MiscKbdSettings kbdinfo;
@@ -1425,10 +1424,14 @@ query(Display *dpy)
 #endif
 #endif
 #ifdef XF86MISC
-    if (XF86MiscQueryExtension(dpy, &dummy, &dummy) &&
-	XF86MiscGetKbdSettings(dpy, &kbdinfo))
-	printf("  auto repeat delay:  %d    repeat rate:  %d\n",
-	       kbdinfo.delay, kbdinfo.rate);
+    {
+	int dummy;
+
+	if (XF86MiscQueryExtension(dpy, &dummy, &dummy) &&
+	    XF86MiscGetKbdSettings(dpy, &kbdinfo))
+	    printf("  auto repeat delay:  %d    repeat rate:  %d\n",
+	           kbdinfo.delay, kbdinfo.rate);
+    }
 #endif
     printf("  auto repeating keys:  ");
     for (i = 0; i < 4; i++) {
