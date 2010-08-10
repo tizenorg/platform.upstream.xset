@@ -1660,8 +1660,8 @@ usage(char *fmt, ...)
 #ifdef FONTCACHE
     fprintf(stderr, "    To control font cache:\n");
     fprintf(stderr, "\t fc [hi-mark [low-mark [balance]]]\n");
-    fprintf(stderr, "\t    both mark values spcecified in KB\n");
-    fprintf(stderr, "\t    balance value spcecified in percent (10 - 90)\n");
+    fprintf(stderr, "\t    both mark values specified in KB\n");
+    fprintf(stderr, "\t    balance value specified in percent (10 - 90)\n");
     fprintf(stderr, "    Show font cache statistics:\n");
     fprintf(stderr, "\t fc s\n");
 #endif
