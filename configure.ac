@@ -32,10 +32,6 @@ XORG_MACROS_VERSION(1.8)
 XORG_DEFAULT_OPTIONS
 AM_CONFIG_HEADER(config.h)
 
-AC_PROG_CC
-AC_PROG_INSTALL
-
-
 # Checks for system functions
 AC_CHECK_FUNCS([usleep])
 
