@@ -568,7 +568,7 @@ main(int argc, char *argv[])
 		     *
 		     * On OS/2, use _sleep2()
 		     */
-		    
+
 #ifdef HAVE_USLEEP
 # define Usleep(us) usleep((us))
 #else
@@ -929,7 +929,7 @@ set_font_path(Display *dpy, char *path, int special, int before, int after)
     }
 
     /*
-     * parse the path list.  If before or after is non-zero, we'll need 
+     * parse the path list.  If before or after is non-zero, we'll need
      * the current value.
      */
 
