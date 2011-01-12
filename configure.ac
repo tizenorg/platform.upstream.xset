@@ -58,7 +58,7 @@ PKG_CHECK_MODULES(SET_XKB, x11,
 	AC_CHECK_HEADERS([X11/XKBlib.h],,,[#include <X11/Xlib.h>])
 	CPPFLAGS="$SAVE_CPPFLAGS"],[echo "not found"])
 
-AC_ARG_WITH(xf86misc, AC_HELP_STRING([--without-xf86misc],[Disable xf86misc support.]),
+AC_ARG_WITH(xf86misc, AS_HELP_STRING([--without-xf86misc],[Disable xf86misc support.]),
                 [USE_XF86MISC="$withval"], [USE_XF86MISC="yes"])
 if test "x$USE_XF86MISC" != "xno" ; then
 	PKG_CHECK_MODULES(SET_XF86MISC, xxf86misc,
@@ -72,7 +72,7 @@ else
         echo "without xf86misc"
 fi
 
-AC_ARG_WITH(fontcache, AC_HELP_STRING([--without-fontcache],[Disable fontcache support.]),
+AC_ARG_WITH(fontcache, AS_HELP_STRING([--without-fontcache],[Disable fontcache support.]),
                 [USE_XFONTCACHE="$withval"], [USE_XFONTCACHE="yes"])
 if test "x$USE_XFONTCACHE" != "xno" ; then
 	PKG_CHECK_MODULES(SET_FONTCACHE, xfontcache,
