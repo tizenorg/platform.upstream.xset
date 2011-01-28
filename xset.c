@@ -1454,7 +1454,7 @@ query(Display *dpy)
     printf("  timeout:  %d    cycle:  %d\n", timeout, interval);
 
     printf("Colors:\n");
-    printf("  default colormap:  0x%lx    BlackPixel:  %ld    WhitePixel:  %ld\n",
+    printf("  default colormap:  0x%lx    BlackPixel:  0x%lx    WhitePixel:  0x%lx\n",
 	   DefaultColormap(dpy, scr), BlackPixel(dpy, scr), WhitePixel(dpy,
 								       scr));
 
