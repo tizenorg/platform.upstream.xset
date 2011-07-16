@@ -78,11 +78,6 @@ in this Software without prior written authorization from The Open Group.
 #  endif
 #  undef BOOL
 # endif
-# ifndef HAVE_USLEEP
-#  if defined(SVR4) && defined(sun)
-#   include <sys/syscall.h>
-#  endif
-# endif
 #endif /* DPMSExtension */
 
 #ifdef XF86MISC
@@ -574,18 +569,6 @@ main(int argc, char *argv[])
 # define Usleep(us) usleep((us))
 #else
 #ifdef SVR4
-# ifdef sun
-/* Anything to avoid linking with -lposix4 */
-#  define Usleep(us) { \
-		struct ts { \
-			long	tv_sec; \
-			long	tv_nsec; \
-		} req; \
-		req.tv_sec = 0; \
-		req.tv_nsec = (us) * 1000;\
-		syscall(SYS_nanosleep, &req, NULL); \
-	}
-# endif
 # ifdef sgi
 #  define Usleep(us) sginap((us) / 1000)
 # endif
