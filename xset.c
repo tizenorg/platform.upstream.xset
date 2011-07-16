@@ -555,8 +555,9 @@ main(int argc, char *argv[])
 		    DPMSEnable(dpy);
 		    DPMSSetTimeouts(dpy, standby_timeout, suspend_timeout,
 			off_timeout);
-		} else if (i + 1 < argc && strcmp(arg, "force") == 0) {
-		    i++;
+		} else if (strcmp(arg, "force") == 0) {
+		    if (++i >= argc)
+			usage("missing argument to dpms force", NULL);
 		    arg = argv[i];
 		    /*
 		     * The calls to usleep below are necessary to
