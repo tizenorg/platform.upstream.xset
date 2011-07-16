@@ -151,8 +151,8 @@ static void set_lock(Display *dpy, Bool onoff);
 static char *on_or_off(int val, int onval, char *onstr,
 		       int offval, char *offstr, char buf[]);
 static void query(Display *dpy);
-static void usage(char *fmt, ...);
-static void error(char *message);
+static void usage(char *fmt, ...) _X_NORETURN;
+static void error(char *message) _X_NORETURN;
 static int local_xerror(Display *dpy, XErrorEvent *rep);
 
 #ifdef XF86MISC

@@ -41,7 +41,7 @@ XORG_DEFAULT_OPTIONS
 AC_CHECK_FUNCS([usleep])
 
 # Checks for pkg-config packages
-PKG_CHECK_MODULES(XSET, xmuu)
+PKG_CHECK_MODULES(XSET, [xproto >= 7.0.17 xmuu])
 
 # This is used below to allow <X11/Xlib.h> to be found
 PKG_CHECK_MODULES(SET_X11, x11)
