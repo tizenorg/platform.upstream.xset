@@ -65,19 +65,6 @@ in this Software without prior written authorization from The Open Group.
 #endif
 #ifdef DPMSExtension
 # include <X11/extensions/dpms.h>
-# ifdef WIN32
-#  define BOOL wBOOL
-#  ifdef Status
-#   undef Status
-#   define Status wStatus
-#  endif
-#  include <windows.h>
-#  ifdef Status
-#   undef Status
-#   define Status int
-#  endif
-#  undef BOOL
-# endif
 #endif /* DPMSExtension */
 
 #ifdef XF86MISC
