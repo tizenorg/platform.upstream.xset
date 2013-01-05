@@ -549,35 +549,14 @@ main(int argc, char *argv[])
 		     * which case the Up transition may immediately
 		     * turn the display back on.
 		     *
-		     * On OS/2, use _sleep2()
 		     */
 
 #ifdef HAVE_USLEEP
 # define Usleep(us) usleep((us))
-#else
-#ifdef SVR4
-# ifdef sgi
-#  define Usleep(us) sginap((us) / 1000)
-# endif
-#endif
-#ifdef hpux
-# ifdef _XPG4_EXTENDED
-#  define Usleep(us) usleep((us))
-# endif
-#endif
-#ifdef __UNIXOS2__
-# define Usleep(us) _sleep2((us / 1000 > 0) ? us / 1000 : 1)
-#endif
-#ifdef WIN32
+#elif defined(WIN32)
 # define Usleep(us) Sleep(us)
-#endif
-#ifndef Usleep
-# if defined(SYSV) || defined(SVR4)
-#  define Usleep(us) sleep((us / 1000000 > 0) ? us / 1000000 : 1)
-# else
-#  define Usleep(us) usleep((us))
-# endif
-#endif
+#else
+# define Usleep(us) sleep((us / 1000000 > 0) ? us / 1000000 : 1)
 #endif /* HAVE_USLEEP */
 
 		    if (strcmp(arg, "on") == 0) {

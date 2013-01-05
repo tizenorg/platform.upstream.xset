@@ -26,6 +26,7 @@ AC_INIT([xset], [1.2.2],
         [https://bugs.freedesktop.org/enter_bug.cgi?product=xorg], [xset])
 AC_CONFIG_SRCDIR([Makefile.am])
 AC_CONFIG_HEADERS([config.h])
+AC_USE_SYSTEM_EXTENSIONS
 
 # Initialize Automake
 AM_INIT_AUTOMAKE([foreign dist-bzip2])
