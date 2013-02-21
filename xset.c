@@ -1661,9 +1661,9 @@ local_xerror(Display *dpy, XErrorEvent *rep)
 		"%s:  bad font path element (#%ld), possible causes are:\n",
 		progName, rep->resourceid);
 	fprintf(stderr,
-		"    Directory does not exist or has wrong permissions\n");
-	fprintf(stderr, "    Directory missing fonts.dir\n");
-	fprintf(stderr, "    Incorrect font server address or syntax\n");
+                "    Directory does not exist or has wrong permissions\n"
+                "    Directory missing fonts.dir\n"
+                "    Incorrect font server address or syntax\n");
     } else if (rep->request_code == X_StoreColors) {
 	switch (rep->error_code) {
 	  case BadAccess:
