@@ -1575,74 +1575,74 @@ usage(char *fmt, ...)
 
     }
 
-    fprintf(stderr, "usage:  %s [-display host:dpy] option ...\n", progName);
-    fprintf(stderr, "    To turn bell off:\n");
-    fprintf(stderr, "\t-b                b off               b 0\n");
-    fprintf(stderr, "    To set bell volume, pitch and duration:\n");
-    fprintf(stderr, "\t b [vol [pitch [dur]]]          b on\n");
+    fprintf(stderr, "usage:  %s [-display host:dpy] option ...\n%s", progName,
+            "    To turn bell off:\n"
+            "\t-b                b off               b 0\n"
+            "    To set bell volume, pitch and duration:\n"
+            "\t b [vol [pitch [dur]]]          b on\n"
 #ifdef MITMISC
-    fprintf(stderr, "    To disable bug compatibility mode:\n");
-    fprintf(stderr, "\t-bc\n");
-    fprintf(stderr, "    To enable bug compatibility mode:\n");
-    fprintf(stderr, "\tbc\n");
+            "    To disable bug compatibility mode:\n"
+            "\t-bc\n"
+            "    To enable bug compatibility mode:\n"
+            "\tbc\n"
 #endif
-    fprintf(stderr, "    To turn keyclick off:\n");
-    fprintf(stderr, "\t-c                c off               c 0\n");
-    fprintf(stderr, "    To set keyclick volume:\n");
-    fprintf(stderr, "\t c [0-100]        c on\n");
+            "    To turn keyclick off:\n"
+            "\t-c                c off               c 0\n"
+            "    To set keyclick volume:\n"
+            "\t c [0-100]        c on\n"
 #ifdef DPMSExtension
-    fprintf(stderr, "    To control Energy Star (DPMS) features:\n");
-    fprintf(stderr, "\t-dpms      Energy Star features off\n");
-    fprintf(stderr, "\t+dpms      Energy Star features on\n");
-    fprintf(stderr, "\t dpms [standby [suspend [off]]]     \n");
-    fprintf(stderr, "\t      force standby \n");
-    fprintf(stderr, "\t      force suspend \n");
-    fprintf(stderr, "\t      force off \n");
-    fprintf(stderr, "\t      force on \n");
-    fprintf(stderr, "\t      (also implicitly enables DPMS features) \n");
-    fprintf(stderr, "\t      a timeout value of zero disables the mode \n");
+            "    To control Energy Star (DPMS) features:\n"
+            "\t-dpms      Energy Star features off\n"
+            "\t+dpms      Energy Star features on\n"
+            "\t dpms [standby [suspend [off]]]     \n"
+            "\t      force standby \n"
+            "\t      force suspend \n"
+            "\t      force off \n"
+            "\t      force on \n"
+            "\t      (also implicitly enables DPMS features) \n"
+            "\t      a timeout value of zero disables the mode \n"
 #endif
 #ifdef FONTCACHE
-    fprintf(stderr, "    To control font cache:\n");
-    fprintf(stderr, "\t fc [hi-mark [low-mark [balance]]]\n");
-    fprintf(stderr, "\t    both mark values specified in KB\n");
-    fprintf(stderr, "\t    balance value specified in percent (10 - 90)\n");
-    fprintf(stderr, "    Show font cache statistics:\n");
-    fprintf(stderr, "\t fc s\n");
+            "    To control font cache:\n"
+            "\t fc [hi-mark [low-mark [balance]]]\n"
+            "\t    both mark values specified in KB\n"
+            "\t    balance value specified in percent (10 - 90)\n"
+            "    Show font cache statistics:\n"
+            "\t fc s\n"
 #endif
-    fprintf(stderr, "    To set the font path:\n");
-    fprintf(stderr, "\t fp= path[,path...]\n");
-    fprintf(stderr, "    To restore the default font path:\n");
-    fprintf(stderr, "\t fp default\n");
-    fprintf(stderr, "    To have the server reread font databases:\n");
-    fprintf(stderr, "\t fp rehash\n");
-    fprintf(stderr, "    To remove elements from font path:\n");
-    fprintf(stderr, "\t-fp path[,path...]  fp- path[,path...]\n");
-    fprintf(stderr, "    To prepend or append elements to font path:\n");
-    fprintf(stderr, "\t+fp path[,path...]  fp+ path[,path...]\n");
-    fprintf(stderr, "    To set LED states off or on:\n");
-    fprintf(stderr, "\t-led [1-32]         led off\n");
-    fprintf(stderr, "\t led [1-32]         led on\n");
+            "    To set the font path:\n"
+            "\t fp= path[,path...]\n"
+            "    To restore the default font path:\n"
+            "\t fp default\n"
+            "    To have the server reread font databases:\n"
+            "\t fp rehash\n"
+            "    To remove elements from font path:\n"
+            "\t-fp path[,path...]  fp- path[,path...]\n"
+            "    To prepend or append elements to font path:\n"
+            "\t+fp path[,path...]  fp+ path[,path...]\n"
+            "    To set LED states off or on:\n"
+            "\t-led [1-32]         led off\n"
+            "\t led [1-32]         led on\n"
 #ifdef XKB
-    fprintf(stderr, "\t-led named 'name'   led off\n");
-    fprintf(stderr, "\t led named 'name'   led on\n");
+            "\t-led named 'name'   led off\n"
+            "\t led named 'name'   led on\n"
 #endif
-    fprintf(stderr, "    To set mouse acceleration and threshold:\n");
-    fprintf(stderr, "\t m [acc_mult[/acc_div] [thr]]    m default\n");
-    fprintf(stderr, "    To set pixel colors:\n");
-    fprintf(stderr, "\t p pixel_value color_name\n");
-    fprintf(stderr, "    To turn auto-repeat off or on:\n");
-    fprintf(stderr, "\t-r [keycode]        r off\n");
-    fprintf(stderr, "\t r [keycode]        r on\n");
+            "    To set mouse acceleration and threshold:\n"
+            "\t m [acc_mult[/acc_div] [thr]]    m default\n"
+            "    To set pixel colors:\n"
+            "\t p pixel_value color_name\n"
+            "    To turn auto-repeat off or on:\n"
+            "\t-r [keycode]        r off\n"
+            "\t r [keycode]        r on\n"
 #if defined(XF86MISC) || defined(XKB)
-    fprintf(stderr, "\t r rate [delay [rate]]\n");
+            "\t r rate [delay [rate]]\n"
 #endif
-    fprintf(stderr, "    For screen-saver control:\n");
-    fprintf(stderr, "\t s [timeout [cycle]]  s default    s on\n");
-    fprintf(stderr, "\t s blank              s noblank    s off\n");
-    fprintf(stderr, "\t s expose             s noexpose\n");
-    fprintf(stderr, "\t s activate           s reset\n");
-    fprintf(stderr, "    For status information:  q\n");
+            "    For screen-saver control:\n"
+            "\t s [timeout [cycle]]  s default    s on\n"
+            "\t s blank              s noblank    s off\n"
+            "\t s expose             s noexpose\n"
+            "\t s activate           s reset\n"
+            "    For status information:  q\n");
     exit(EXIT_SUCCESS);
 }
 
