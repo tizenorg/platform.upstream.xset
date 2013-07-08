@@ -1,0 +1,8 @@
+Change-Id: I35abaccbc0c7354e3572c0dfc6679bc3886a8942
+Code-Review+2: Ryan Ware <ware@linux.intel.com>
+Verified+1: Ryan Ware <ware@linux.intel.com>
+Submitted-by: Ryan Ware <ware@linux.intel.com>
+Submitted-at: Mon, 08 Jul 2013 09:38:19 -0700
+Reviewed-on: https://review.tizen.org/gerrit/5021
+Project: platform/upstream/xset
+Branch: refs/heads/tizen
