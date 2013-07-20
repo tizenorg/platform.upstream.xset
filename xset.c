@@ -185,6 +185,9 @@ main(int argc, char *argv[])
 	    if (++i >= argc)
 		usage("missing argument to -display");
 	    disp = argv[i];
+	} else if (strcmp(arg, "-version") == 0) {
+	    puts(PACKAGE_STRING);
+	    exit(EXIT_SUCCESS);
 	} else {
 	    hasargs = True;
 	}
@@ -1648,7 +1651,9 @@ usage(const char *fmt, ...)
             "\t s blank              s noblank    s off\n"
             "\t s expose             s noexpose\n"
             "\t s activate           s reset\n"
-            "    For status information:  q\n");
+            "    For status information:  q\n"
+            "    To print version: -version\n"
+        );
     exit(EXIT_SUCCESS);
 }
 
