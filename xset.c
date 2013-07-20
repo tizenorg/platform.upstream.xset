@@ -737,7 +737,7 @@ main(int argc, char *argv[])
 	    if (numpixels >= MAX_PIXEL_COUNT)
 		usage("more than %d pixels specified", MAX_PIXEL_COUNT);
 	    if (*arg >= '0' && *arg <= '9')
-		pixels[numpixels] = atoi(arg);
+		pixels[numpixels] = strtoul(arg, NULL, 10);
 	    else
 		usage("invalid pixel number %s", arg);
 	    i++;
@@ -853,9 +853,9 @@ set_font_path(Display *dpy, const char *path, int special, int before, int after
 {
     char *directories = NULL;
     char **directoryList = NULL;
-    int ndirs = 0;
+    unsigned int ndirs = 0;
     char **currentList = NULL;
-    int ncurrent = 0;
+    unsigned int ncurrent = 0;
 
     if (special) {
 	if (strcmp(path, "default") == 0) {
@@ -863,13 +863,13 @@ set_font_path(Display *dpy, const char *path, int special, int before, int after
 	    return;
 	}
 	if (strcmp(path, "rehash") == 0) {
-	    currentList = XGetFontPath(dpy, &ncurrent);
+	    currentList = XGetFontPath(dpy, (int *) &ncurrent);
 	    if (!currentList) {
 		fprintf(stderr, "%s:  unable to get current font path.\n",
 			progName);
 		return;
 	    }
-	    XSetFontPath(dpy, currentList, ncurrent);
+	    XSetFontPath(dpy, currentList, (int) ncurrent);
 	    XFreeFontPath(currentList);
 	    return;
 	}
@@ -885,7 +885,7 @@ set_font_path(Display *dpy, const char *path, int special, int before, int after
      */
 
     if (before != 0 || after != 0) {
-	currentList = XGetFontPath(dpy, &ncurrent);
+	currentList = XGetFontPath(dpy, (int *) &ncurrent);
 	if (!currentList) {
 	    fprintf(stderr, "%s:  unable to get old font path.\n", progName);
 	    before = after = 0;
@@ -913,7 +913,7 @@ set_font_path(Display *dpy, const char *path, int special, int before, int after
     else
     {
 	/* mung the path and set directoryList pointers */
-	int i = 0;
+	unsigned int i = 0;
 	char *cp = directories;
 
 	directoryList[i++] = cp;
@@ -934,36 +934,36 @@ set_font_path(Display *dpy, const char *path, int special, int before, int after
      */
 
     if (before == 0 && after == 0) {
-	XSetFontPath(dpy, directoryList, ndirs);
+	XSetFontPath(dpy, directoryList, (int) ndirs);
     }
 
     /* if adding to list, build a superset */
     if (before > 0 || after > 0) {
-	int nnew = ndirs + ncurrent;
+	unsigned int nnew = ndirs + ncurrent;
 	char **newList = (char **)malloc(nnew * sizeof(char *));
 
 	if (!newList)
 	    error("out of memory");
 	if (before > 0) {	       /* new + current */
 	    memmove((char *)newList, (char *)directoryList,
-		    (unsigned)(ndirs * sizeof(char *)));
+                    (ndirs * sizeof(char *)));
 	    memmove((char *)(newList + ndirs), (char *)currentList,
-		    (unsigned)(ncurrent * sizeof(char *)));
-	    XSetFontPath(dpy, newList, nnew);
+		    (ncurrent * sizeof(char *)));
+	    XSetFontPath(dpy, newList, (int) nnew);
 	} else if (after > 0) {
 	    memmove((char *)newList, (char *)currentList,
-		    (unsigned)(ncurrent * sizeof(char *)));
+		    (ncurrent * sizeof(char *)));
 	    memmove((char *)(newList + ncurrent), (char *)directoryList,
-		    (unsigned)(ndirs * sizeof(char *)));
-	    XSetFontPath(dpy, newList, nnew);
+		    (ndirs * sizeof(char *)));
+	    XSetFontPath(dpy, newList,(int) nnew);
 	}
 	free((char *)newList);
     }
 
     /* if deleting from list, build one the same size */
     if (before < 0 || after < 0) {
-	int i, j;
-	int nnew = 0;
+	unsigned int i, j;
+	unsigned int nnew = 0;
 	char **newList = (char **)malloc(ncurrent * sizeof(char *));
 
 	if (!newList)
@@ -982,7 +982,7 @@ set_font_path(Display *dpy, const char *path, int special, int before, int after
 		    "%s:  warning, no entries deleted from font path.\n",
 		    progName);
 	}
-	XSetFontPath(dpy, newList, nnew);
+	XSetFontPath(dpy, newList, (int) nnew);
 	free((char *)newList);
     }
 
@@ -1143,7 +1143,7 @@ set_pixels(Display *dpy, unsigned long *pixels, caddr_t * colors,
     int scr = DefaultScreen(dpy);
     Visual *visual = DefaultVisual(dpy, scr);
     Colormap cmap = DefaultColormap(dpy, scr);
-    unsigned long max_cells = DisplayCells(dpy, scr);
+    unsigned long max_cells = (unsigned long) DisplayCells(dpy, scr);
     XVisualInfo viproto, *vip;
     int nvisuals = 0;
     const char *visual_type = NULL;
@@ -1316,7 +1316,7 @@ query(Display *dpy)
 		for (i = 0; i < j; i++) {
 		    if (XkbGetNamedIndicator(dpy, iatoms[i], &inds[i],
 					     &istates[i], NULL, NULL)) {
-			int namelen = strlen(iatomnames[i]);
+			int namelen = (int) strlen(iatomnames[i]);
 			if (namelen > maxnamelen) {
 			    maxnamelen = namelen;
 			}
@@ -1342,7 +1342,7 @@ query(Display *dpy)
 		for (i = 0, linewidth = 0; i < activecount ; i++) {
 		    if (inds[i] != -1) {
 			int spaces = columnwidth - XKB_IND_FORMAT_CHARS
-			    - strlen(iatomnames[i]);
+			    - (int) strlen(iatomnames[i]);
 
 			if (spaces < 0)
 			    spaces = 0;
