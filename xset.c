@@ -115,12 +115,12 @@ static char *progName;
 
 static int error_status = 0;
 
-static int is_number(char *arg, int maximum);
+static int is_number(const char *arg, int maximum);
 static void set_click(Display *dpy, int percent);
 static void set_bell_vol(Display *dpy, int percent);
 static void set_bell_pitch(Display *dpy, int pitch);
 static void set_bell_dur(Display *dpy, int duration);
-static void set_font_path(Display *dpy, char *path, int special,
+static void set_font_path(Display *dpy, const char *path, int special,
 			  int before, int after);
 static void set_led(Display *dpy, int led, int led_mode);
 static void xkbset_led(Display *dpy, const char *led, int led_mode);
@@ -130,11 +130,11 @@ static void set_repeat(Display *dpy, int key, int auto_repeat_mode);
 static void set_pixels(Display *dpy, unsigned long *pixels, caddr_t *colors,
 		       int numpixels);
 static void set_lock(Display *dpy, Bool onoff);
-static char *on_or_off(int val, int onval, char *onstr,
-		       int offval, char *offstr, char buf[]);
+static const char *on_or_off(int val, int onval, const char *onstr,
+		       int offval, const char *offstr, char buf[]);
 static void query(Display *dpy);
-static void usage(char *fmt, ...) _X_NORETURN;
-static void error(char *message) _X_NORETURN;
+static void usage(const char *fmt, ...) _X_NORETURN;
+static void error(const char *message) _X_NORETURN;
 static int local_xerror(Display *dpy, XErrorEvent *rep);
 
 #ifdef XF86MISC
@@ -147,7 +147,7 @@ static void xkbset_repeatrate(Display *dpy, int delay, int rate);
 int
 main(int argc, char *argv[])
 {
-    register char *arg;
+    const char *arg;
     register int i;
     int percent;
     int acc_num, acc_denom, threshold;
@@ -763,9 +763,9 @@ main(int argc, char *argv[])
 }
 
 static int
-is_number(char *arg, int maximum)
+is_number(const char *arg, int maximum)
 {
-    register char *p;
+    const char *p;
 
     if (arg[0] == '-' && arg[1] == '1' && arg[2] == '\0')
 	return (1);
@@ -849,8 +849,9 @@ set_bell_dur(Display *dpy, int duration)
  *	   0      1	FontPath := current + path
  */
 static void
-set_font_path(Display *dpy, char *path, int special, int before, int after)
+set_font_path(Display *dpy, const char *path, int special, int before, int after)
 {
+    char *directories = NULL;
     char **directoryList = NULL;
     int ndirs = 0;
     char **currentList = NULL;
@@ -893,7 +894,7 @@ set_font_path(Display *dpy, char *path, int special, int before, int after)
 
     {
 	/* count the number of directories in path */
-	register char *cp = path;
+	const char *cp = path;
 
 	ndirs = 1;
 	while ((cp = strchr(cp, ',')) != NULL) {
@@ -906,10 +907,14 @@ set_font_path(Display *dpy, char *path, int special, int before, int after)
     if (!directoryList)
 	error("out of memory for font path directory list");
 
+    directories = strdup(path);
+    if (!directories)
+        error("out of memory for font path directory string");
+    else
     {
 	/* mung the path and set directoryList pointers */
 	int i = 0;
-	char *cp = path;
+	char *cp = directories;
 
 	directoryList[i++] = cp;
 	while ((cp = strchr(cp, ',')) != NULL) {
@@ -981,6 +986,7 @@ set_font_path(Display *dpy, char *path, int special, int before, int after)
 	free((char *)newList);
     }
 
+    free(directories);
     if (directoryList)
 	free((char *)directoryList);
     if (currentList)
@@ -1140,7 +1146,7 @@ set_pixels(Display *dpy, unsigned long *pixels, caddr_t * colors,
     unsigned long max_cells = DisplayCells(dpy, scr);
     XVisualInfo viproto, *vip;
     int nvisuals = 0;
-    char *visual_type = NULL;
+    const char *visual_type = NULL;
     int i;
 
     viproto.visualid = XVisualIDFromVisual(visual);
@@ -1235,9 +1241,9 @@ set_font_cache(Display *dpy, long himark, long lowmark, long balance)
 }
 #endif
 
-static char *
-on_or_off(int val, int onval, char *onstr,
-    int offval, char *offstr, char buf[])
+static const char *
+on_or_off(int val, int onval, const char *onstr,
+    int offval, const char *offstr, char buf[])
 {
     if (val == onval)
 	return onstr;
@@ -1562,7 +1568,7 @@ query_cache_status(Display *dpy)
 /*  This is the usage function */
 
 static void
-usage(char *fmt, ...)
+usage(const char *fmt, ...)
 {
     va_list ap;
 
@@ -1647,7 +1653,7 @@ usage(char *fmt, ...)
 }
 
 static void
-error(char *message)
+error(const char *message)
 {
     fprintf(stderr, "%s: %s\n", progName, message);
     exit(EXIT_FAILURE);
