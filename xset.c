@@ -131,7 +131,8 @@ static void set_pixels(Display *dpy, unsigned long *pixels, caddr_t *colors,
 		       int numpixels);
 static void set_lock(Display *dpy, Bool onoff);
 static const char *on_or_off(int val, int onval, const char *onstr,
-		       int offval, const char *offstr, char buf[]);
+                             int offval, const char *offstr,
+                             char buf[], size_t bufsize);
 static void query(Display *dpy);
 static void usage(const char *fmt, ...) _X_NORETURN _X_ATTRIBUTE_PRINTF(1,2);
 static void error(const char *message) _X_NORETURN;
@@ -1246,7 +1247,7 @@ set_font_cache(Display *dpy, long himark, long lowmark, long balance)
 
 static const char *
 on_or_off(int val, int onval, const char *onstr,
-    int offval, const char *offstr, char buf[])
+    int offval, const char *offstr, char buf[], size_t bufsize)
 {
     if (val == onval)
 	return onstr;
@@ -1254,7 +1255,7 @@ on_or_off(int val, int onval, const char *onstr,
 	return offstr;
 
     buf[0] = '\0';
-    sprintf(buf, "<%d>", val);
+    snprintf(buf, bufsize, "<%d>", val);
     return buf;
 }
 
@@ -1290,9 +1291,9 @@ query(Display *dpy)
     printf("Keyboard Control:\n");
     printf
 	("  auto repeat:  %s    key click percent:  %d    LED mask:  %08lx\n",
-	on_or_off(values.global_auto_repeat, AutoRepeatModeOn, "on",
-	    AutoRepeatModeOff, "off", buf), values.key_click_percent,
-	values.led_mask);
+	 on_or_off(values.global_auto_repeat, AutoRepeatModeOn, "on",
+		   AutoRepeatModeOff, "off", buf, sizeof(buf)),
+	 values.key_click_percent, values.led_mask);
 #ifdef XKB
     if (XkbQueryExtension(dpy, &xkbopcode, &xkbevent, &xkberror, &xkbmajor,
 			  &xkbminor)
@@ -1355,7 +1356,8 @@ query(Display *dpy)
 					    spaces + 3,
 					    on_or_off(istates[i],
 						      True,  "on ",
-						      False, "off", buf));
+						      False, "off",
+						      buf, sizeof(buf)));
 		    }
 		    if (linewidth > (MAX_LINE_WIDTH - columnwidth)) {
 			printf("\n");
@@ -1406,10 +1408,10 @@ query(Display *dpy)
     printf("Screen Saver:\n");
     printf("  prefer blanking:  %s    ",
 	   on_or_off(prefer_blank, PreferBlanking, "yes",
-		     DontPreferBlanking, "no", buf));
+		     DontPreferBlanking, "no", buf, sizeof(buf)));
     printf("allow exposures:  %s\n",
 	   on_or_off(allow_exp, AllowExposures, "yes",
-		     DontAllowExposures, "no", buf));
+		     DontAllowExposures, "no", buf, sizeof(buf)));
     printf("  timeout:  %d    cycle:  %d\n", timeout, interval);
 
     printf("Colors:\n");
