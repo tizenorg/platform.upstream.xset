@@ -133,7 +133,7 @@ static void set_lock(Display *dpy, Bool onoff);
 static const char *on_or_off(int val, int onval, const char *onstr,
 		       int offval, const char *offstr, char buf[]);
 static void query(Display *dpy);
-static void usage(const char *fmt, ...) _X_NORETURN;
+static void usage(const char *fmt, ...) _X_NORETURN _X_ATTRIBUTE_PRINTF(1,2);
 static void error(const char *message) _X_NORETURN;
 static int local_xerror(Display *dpy, XErrorEvent *rep);
 
@@ -183,14 +183,14 @@ main(int argc, char *argv[])
 	arg = argv[i];
 	if (strcmp(arg, "-display") == 0 || strcmp(arg, "-d") == 0) {
 	    if (++i >= argc)
-		usage("missing argument to -display", NULL);
+		usage("missing argument to -display");
 	    disp = argv[i];
 	} else {
 	    hasargs = True;
 	}
     }
     if (!hasargs) {
-	usage(NULL, NULL);	       /* replace with window interface */
+	usage(NULL);		       /* replace with window interface */
     }
 
     dpy = XOpenDisplay(disp);    /*  Open display and check for success */
@@ -306,7 +306,7 @@ main(int argc, char *argv[])
 		    himark = atoi(arg);
 		    i++;
 		    if (himark <= 0) {
-			usage("hi-mark must be greater than 0", NULL);
+			usage("hi-mark must be greater than 0");
 		    }
 		    if (i >= argc) {
 			lowmark = (himark * 70) / 100;
@@ -318,7 +318,7 @@ main(int argc, char *argv[])
 			lowmark = atoi(arg);
 			i++;
 			if (lowmark <= 0) {
-			    usage("low-mark must be greater than 0", NULL);
+			    usage("low-mark must be greater than 0");
 			}
 			if (himark <= lowmark) {
 			    usage("hi-mark must be greater than low-mark",
@@ -359,7 +359,7 @@ main(int argc, char *argv[])
 	    i++;
 	} else if (strcmp(arg, "fp=") == 0) {	/* unconditionally set */
 	    if (i >= argc) {
-		usage("missing fp= argument", NULL);
+		usage("missing fp= argument");
 	    } else {
 		arg = nextarg(i, argv);
 	    }
@@ -367,25 +367,25 @@ main(int argc, char *argv[])
 	    i++;
 	} else if (strcmp(arg, "+fp") == 0) {	/* set font path */
 	    if (i >= argc)
-		usage("missing +fp argument", NULL);
+		usage("missing +fp argument");
 	    arg = nextarg(i, argv);
 	    set_font_path(dpy, arg, 0, 1, 0);	/* not special, prepend */
 	    i++;
 	} else if (strcmp(arg, "fp+") == 0) {	/* set font path */
 	    if (i >= argc)
-		usage("missing fp+ argument", NULL);
+		usage("missing fp+ argument");
 	    arg = nextarg(i, argv);
 	    set_font_path(dpy, arg, 0, 0, 1);	/* not special, append */
 	    i++;
 	} else if (strcmp(arg, "-fp") == 0) {	/* set font path */
 	    if (i >= argc)
-		usage("missing -fp argument", NULL);
+		usage("missing -fp argument");
 	    arg = nextarg(i, argv);
 	    set_font_path(dpy, arg, 0, -1, 0);	/* not special, preremove */
 	    i++;
 	} else if (strcmp(arg, "fp-") == 0) {	/* set font path */
 	    if (i >= argc)
-		usage("missing fp- argument", NULL);
+		usage("missing fp- argument");
 	    arg = nextarg(i, argv);
 	    set_font_path(dpy, arg, 0, 0, -1);	/* not special, postremove */
 	    i++;
@@ -399,7 +399,7 @@ main(int argc, char *argv[])
 	    arg = nextarg(i, argv);
 	    if (strcmp(arg, "named") == 0) {
 		if (++i >= argc) {
-		    usage("missing argument to led named", NULL);
+		    usage("missing argument to led named");
 		} else {
 		    arg = nextarg(i, argv);
 		    xkbset_led(dpy, arg, values.led_mode);
@@ -422,7 +422,7 @@ main(int argc, char *argv[])
 	    arg = nextarg(i, argv);
 	    if (strcmp(arg, "named") == 0) {
 		if (++i >= argc) {
-		    usage("missing argument to -led named", NULL);
+		    usage("missing argument to -led named");
 		} else {
 		    arg = nextarg(i, argv);
 		    xkbset_led(dpy, arg, values.led_mode);
@@ -539,7 +539,7 @@ main(int argc, char *argv[])
 			off_timeout);
 		} else if (strcmp(arg, "force") == 0) {
 		    if (++i >= argc)
-			usage("missing argument to dpms force", NULL);
+			usage("missing argument to dpms force");
 		    arg = argv[i];
 		    /*
 		     * The calls to usleep below are necessary to
@@ -732,7 +732,7 @@ main(int argc, char *argv[])
 	    set_repeat(dpy, key, auto_repeat_mode);
 	} else if (strcmp(arg, "p") == 0) {
 	    if (i + 1 >= argc)
-		usage("missing argument to p", NULL);
+		usage("missing argument to p");
 	    arg = argv[i];
 	    if (numpixels >= MAX_PIXEL_COUNT)
 		usage("more than %d pixels specified", MAX_PIXEL_COUNT);
