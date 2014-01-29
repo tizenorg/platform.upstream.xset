@@ -1,3 +1,5 @@
+%bcond_with x
+
 Name:           xset
 Version:        1.2.2
 Release:        1
@@ -15,6 +17,10 @@ BuildRequires:  pkgconfig(xxf86misc)
 BuildRequires:  pkgconfig(xmuu)
 BuildRequires:  pkgconfig(xorg-macros) >= 1.8
 BuildRequires:  pkgconfig(xproto) >= 7.0.17
+
+%if !%{with x}
+ExclusiveArch:
+%endif
 
 %description
 This program is used to set various user preference options of the
