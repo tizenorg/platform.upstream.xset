@@ -1,7 +1,7 @@
 %bcond_with x
 
 Name:           xset
-Version:        1.2.2
+Version:        1.2.3
 Release:        1
 License:        MIT
 Summary:        User preference utility for X
@@ -31,7 +31,7 @@ display.
 cp %{SOURCE1001} .
 
 %build
-%configure
+%autogen
 make %{?_smp_mflags}
 
 %install
